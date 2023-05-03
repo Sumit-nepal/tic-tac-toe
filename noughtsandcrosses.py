@@ -175,10 +175,34 @@ def load_scores():
     
     return leaders
 load_scores()
-# def save_score(score):
-#     # develop code to ask the player for their name
-#     # and then save the current score to the file 'leaderboard.txt'
-#     return
+
+def save_score(score):
+    # prompt user for their name
+    name = str(input("Enter your name: "))
+
+    # open the existing leaderboard
+    try:
+        with open("leaderboard.txt","r") as file:
+            data = json.load(file)
+    except (PermissionError,EOFError,ValueError) as error:
+        print(f"Error: {error}")
+    
+    # if there is no file create a leaderboard list
+    except FileNotFoundError:
+        data = []
+    
+    # add new score to a leaderboard
+    data.append({
+        "name" : name,
+        "score" : score
+    })
+
+    # save user name and score in file
+    with open("leaderboard.txt","w") as file:
+        json.dump("data",file)
+    
+    print("Name and score saved!!")
+    
 
 
 # def display_leaderboard(leaders):
