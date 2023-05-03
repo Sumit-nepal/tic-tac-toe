@@ -174,7 +174,7 @@ def load_scores():
         print(f"Error: {error}")
     
     return leaders
-load_scores()
+
 
 def save_score(score):
     # prompt user for their name
@@ -204,8 +204,12 @@ def save_score(score):
     print("Name and score saved!!")
     
 
-
-# def display_leaderboard(leaders):
-#     # develop code to display the leaderboard scores
-#     # passed in the Python dictionary parameter leader
-#     pass
+def display_leaderboard(leaders):
+    # iterate through each items in dictionary and print them
+    try:
+        for key, value in leaders.items():
+            print(key,value)
+    
+    # catch and print the error in case of any
+    except Exception as error:
+        print(f"Error: {error}")

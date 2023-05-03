@@ -22,7 +22,7 @@ def main():
         if choice == 'q':
             print('Thank you for playing the "Unbeatable Noughts and Crosses" game.')
             print('Good bye')
-            return
+            return 
 
 
 # Program execution begins here
