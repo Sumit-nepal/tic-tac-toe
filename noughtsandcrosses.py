@@ -77,12 +77,12 @@ def choose_computer_move(board):
         row = (computer - 1) // 3
         col = (computer - 1) % 3
 
-
+    # catch error in case of any
     except Exception as error:
         print(f"Error:{error}")
     # return row and col
     return row, col
-print(choose_computer_move("h"))
+
 def check_for_win(board, mark):
     # develop code to check if either the player or the computer has won
     # check row
@@ -159,14 +159,23 @@ def menu():
     return choice
 
 
-# def load_scores():
-#     # develop code to load the leaderboard scores
-#     # from the file 'leaderboard.txt'
-#     # return the scores in a Python dictionary
-#     # with the player names as key and the scores as values
-#     # return the dictionary in leaders
-#     return leaders
+def load_scores():
+    # initialize an empty dictionary
+    leaders = {}
+
+    # open file and read player name and score
+    try:
+        with open("leaderboard.txt","r") as file:
+            data = json.load(file)
+            leaders = {name:int(score)for name, score in data.items()}
     
+    # handle any exception that may occur
+    except (PermissionError,FileNotFoundError,EOFError,ValueError) as error:
+        print(f"Error: {error}")
+    
+    return leaders
+leader = load_scores()
+print(leader)
 # def save_score(score):
 #     # develop code to ask the player for their name
 #     # and then save the current score to the file 'leaderboard.txt'
