@@ -132,17 +132,39 @@ def choose_computer_move(board):
 
 def check_for_win(board, mark):
     # develop code to check if either the player or the computer has won
-    # return True if someone won, False otherwise
+    # check row
+    for row in range(3):
+        if board[row][0] == mark and board[row][1] == mark and board[row][2] == mark: 
+            return True
+    
+    # check columns
+    for col in range(3):
+        if board[0][col] == mark and board[1][col] == mark and board[2][col] == mark: 
+            return True
+    
+    # check diagnols
+    if board[0][0] == mark and board[1][1] == mark and board[2][2] == mark:
+        return True
+    if board[0][2] == mark and board[1][1] == mark and board[2][0] == mark:
+        return True
+    
+
+    # if no one wins return false
     return False
 
 def check_for_draw(board):
     # develop cope to check if all cells are occupied
-    # return True if it is, False otherwise
+    # check row
+    for row in board:
+        for cell in row:
+            if cell == " ":
+                return False
     return True
+    
         
 def play_game(board):
     # develop code to play the game
-    # star with a call to the initialise_board(board) function to set
+    # start with a call to the initialise_board(board) function to set
     # the board cells to all single spaces ' '
     # then draw the board
     # then in a loop, get the player move, update and draw the board
@@ -162,29 +184,43 @@ def play_game(board):
                     
                 
 def menu():
-    # get user input of either '1', '2', '3' or 'q'
-    # 1 - Play the game
-    # 2 - Save score in file 'leaderboard.txt'
-    # 3 - Load and display the scores from the 'leaderboard.txt'
-    # q - End the program
+    # prompt the user for their choice
+    option = ["1","2","3","q"]
+    terminate = False  # initialize terminate as fasle
+    while not terminate:
+        try:
+            choice = input("""Enter one of the following option:
+            1- Play the game
+            2- Save your score in the leaderboard
+            3- Load and display the leaderboard
+            q- End the program
+            1,2,3 or q?  """)
+            # check if user has entered the valid option
+            if choice not in option:
+                print("Invalid option")   
+            else:
+                terminate = not terminate 
+        except Exception as error:
+            print(f"Error: {error}")
+     
     return choice
+menu()
 
-
-def load_scores():
-    # develop code to load the leaderboard scores
-    # from the file 'leaderboard.txt'
-    # return the scores in a Python dictionary
-    # with the player names as key and the scores as values
-    # return the dictionary in leaders
-    return leaders
+# def load_scores():
+#     # develop code to load the leaderboard scores
+#     # from the file 'leaderboard.txt'
+#     # return the scores in a Python dictionary
+#     # with the player names as key and the scores as values
+#     # return the dictionary in leaders
+#     return leaders
     
-def save_score(score):
-    # develop code to ask the player for their name
-    # and then save the current score to the file 'leaderboard.txt'
-    return
+# def save_score(score):
+#     # develop code to ask the player for their name
+#     # and then save the current score to the file 'leaderboard.txt'
+#     return
 
 
-def display_leaderboard(leaders):
-    # develop code to display the leaderboard scores
-    # passed in the Python dictionary parameter leader
-    pass
+# def display_leaderboard(leaders):
+#     # develop code to display the leaderboard scores
+#     # passed in the Python dictionary parameter leader
+#     pass
