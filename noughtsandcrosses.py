@@ -45,91 +45,44 @@ def initialise_board(board):
 
 def get_player_move(board):
     # develop code to ask the user for the cell to put the X in,
-    terminate = False  # initialize terminate with initial value of False
-    while not terminate:
+    user = None  # initialize terminate with initial value of False
+    while user is None:
         try:
             # prompt user where they want to put the X
             user = int(input("Choose your square:\n 1 2 3 \n 4 5 6 \n 7 8 9 : "))
             # check if user has entered valid cell or not
-            if (user > 0 ) and (user < 10):
-                   # convert the user input into row and column to fill the user entered cell
-                if user == 1:
-                    row = 0
-                    col = 0
-                elif user == 2:
-                    row = 0
-                    col = 1
-                elif user == 3:
-                    row = 0
-                    col = 2
-                elif user == 4:
-                    row = 1
-                    col = 0
-                elif user == 5:
-                    row = 1
-                    col = 1
-                elif user == 6:
-                    row = 1
-                    col = 2
-                elif user == 7:
-                    row = 2
-                    col = 0
-                elif user == 8:
-                    row = 2
-                    col = 1
-                else:
-                    row = 2
-                    col = 2
-                terminate = True  # if user input is valid break the loop 
-
+            if not (user > 0 ) and (user < 10):
+                print("number should be between 1 to 9")
+        
         # print error message in case of invalid input
         except ValueError:
             print("Invalid Input")
         
-        # dispaly error in case of any unexpected error
+        # catch any error if it occurs
         except Exception as error:
             print(f"Error:{error}")
         
+        # convert the user input into row and column to fill the user entered cell
+        row = (user - 1) // 3
+        col = (user - 1) % 3
     # return row and col
     return row, col
 
-
 def choose_computer_move(board):
     try:
-        # develop code to let the computer chose a cell to put a nought in
+        # generate random number from 1-9
         computer = random.randint(1,9)
-        if computer == 1:
-            row = 0
-            col = 0
-        elif computer == 2:
-            row = 0
-            col = 1
-        elif computer == 3:
-            row = 0
-            col = 2
-        elif computer == 4:
-            row = 1
-            col = 0
-        elif computer == 5:
-            row = 1
-            col = 1
-        elif computer == 6:
-            row = 1
-            col = 2
-        elif computer == 7:
-            row = 2
-            col = 0
-        elif computer == 8:
-            row = 2
-            col = 1
-        else:
-            row = 2
-            col = 2
+
+        # convert the number into row and colum to fill in "O"
+        row = (computer - 1) // 3
+        col = (computer - 1) % 3
+
+
     except Exception as error:
         print(f"Error:{error}")
     # return row and col
     return row, col
-
+print(choose_computer_move("h"))
 def check_for_win(board, mark):
     # develop code to check if either the player or the computer has won
     # check row
@@ -204,7 +157,7 @@ def menu():
             print(f"Error: {error}")
      
     return choice
-menu()
+
 
 # def load_scores():
 #     # develop code to load the leaderboard scores
