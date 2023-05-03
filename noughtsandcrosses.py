@@ -174,8 +174,7 @@ def load_scores():
         print(f"Error: {error}")
     
     return leaders
-leader = load_scores()
-print(leader)
+load_scores()
 # def save_score(score):
 #     # develop code to ask the player for their name
 #     # and then save the current score to the file 'leaderboard.txt'
