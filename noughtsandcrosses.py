@@ -1,10 +1,11 @@
 """
 This is a nought and cross game where user plays against the computer
 """
-import random
-import os.path
 import json
+import random
+
 random.seed()
+
 
 def draw_board(board):
     """
@@ -16,14 +17,13 @@ def draw_board(board):
     print("\t     |     |")
     print("\t  {}  |  {}  |  {}".format(board[0][0], board[0][1], board[0][2]))
     print('\t_____|_____|_____')
- 
+
     print("\t     |     |")
     print("\t  {}  |  {}  |  {}".format(board[1][0], board[1][1], board[1][2]))
     print('\t_____|_____|_____')
- 
- 
+
     print("\t     |     |")
- 
+
     print("\t  {}  |  {}  |  {}".format(board[2][0], board[2][1], board[2][2]))
     print("\t     |     |")
     print("\n")
@@ -43,16 +43,17 @@ def welcome(board):
     # print the message
     print("When prompted, enter the number corresponding to the square you want.")
 
+
 def initialise_board(board):
     """
-    This function iniialize the board by setting all the cells to empty so that user 
+    This function initialize the board by setting all the cells to empty so that user
     and computer can enter the 'X' and 'O' respectively
     """
     # update elements of the board list to ' '
     for i in range(3):
         for j in range(3):
             board[i][j] = ' '
-    
+
     # call the board function and pass the argument
     draw_board(board)
     return board
@@ -72,29 +73,29 @@ def get_player_move(board):
             # prompt user where they want to put the X
             user = int(input("Choose your square:\n 1 2 3 \n 4 5 6 \n 7 8 9 : "))
             # check if user has entered valid cell or not
-            if not ((user > 0 ) and (user < 10)):
+            if not ((user > 0) and (user < 10)):
                 print("number should be between 1 to 9")
                 user = None
             else:
                 # convert the user input into row and column to fill the user entered cell
                 row = (user - 1) // 3
                 col = (user - 1) % 3
-                
+
                 # check if cell is already filled or not
                 if board[row][col] != " ":
-                    print("place is alredy filled!!!")
+                    print("place is already filled!!!")
                     user = None
-                else: # if user input is valid return row and column
+                else:  # if user input is valid return row and column
                     return row, col
 
         # print error message in case of invalid input
         except ValueError:
             print("Invalid Input")
-        
+
         # catch any error if it occurs
         except Exception as error:
             print(f"Error:{error}")
-        
+
 
 def choose_computer_move(board):
     """
@@ -105,7 +106,7 @@ def choose_computer_move(board):
     while computer is None:
         try:
             # generate random number from 1-9
-            computer = random.randint(1,9)
+            computer = random.randint(1, 9)
 
             # convert the number into row and colum to fill in "O"
             row = (computer - 1) // 3
@@ -115,10 +116,10 @@ def choose_computer_move(board):
             else:
                 return row, col
 
-    # catch error in case of any
+        # catch error in case of any
         except Exception as error:
             print(f"Error:{error}")
-    
+
 
 def check_for_win(board, mark):
     """
@@ -128,15 +129,15 @@ def check_for_win(board, mark):
     try:
         # check row
         for row in range(3):
-            if board[row][0] == mark and board[row][1] == mark and board[row][2] == mark: 
+            if board[row][0] == mark and board[row][1] == mark and board[row][2] == mark:
                 return True
-    
+
         # check columns
         for col in range(3):
-            if board[0][col] == mark and board[1][col] == mark and board[2][col] == mark: 
+            if board[0][col] == mark and board[1][col] == mark and board[2][col] == mark:
                 return True
-    
-        # check diagnols
+
+        # check diagonals
         if board[0][0] == mark and board[1][1] == mark and board[2][2] == mark:
             return True
         if board[0][2] == mark and board[1][1] == mark and board[2][0] == mark:
@@ -148,9 +149,10 @@ def check_for_win(board, mark):
     # if no one wins return false
     return False
 
+
 def check_for_draw(board):
     """
-    This fuction checks for the draw conditions
+    This function checks for the draw conditions
     """
     # develop cope to check if all cells are occupied
     try:
@@ -164,21 +166,21 @@ def check_for_draw(board):
     except Exception as error:
         print(f"Error:{error}")
 
-    
+
 def play_game(board):
     """ 
     This is the main that connects all the previous build function so that the game can be played
     """
     try:
         initialise_board(board)
-    
+
         terminate = False  # initialize terminate as false
         outcome = None  # initialize outcome as None
         while not terminate:
             # Player's move
             player_mark = 'X'
             print(f"Player's turn (mark: {player_mark})")
-            row, col= get_player_move(board)
+            row, col = get_player_move(board)
             board[row][col] = player_mark
             draw_board(board)
 
@@ -188,7 +190,7 @@ def play_game(board):
                 print("Player wins!")
                 outcome = 1
                 terminate = True
-       
+
             # Check for a draw
             if check_for_draw(board):
                 print("Draw!")
@@ -199,7 +201,7 @@ def play_game(board):
                 # Computer's move
                 computer_mark = 'O'
                 print(f"Computer's turn (mark: {computer_mark})")
-                row,col = choose_computer_move(board)
+                row, col = choose_computer_move(board)
                 board[row][col] = computer_mark
                 draw_board(board)
 
@@ -211,16 +213,17 @@ def play_game(board):
     # catch error in case of any
     except Exception as error:
         print(f"Error:{error}")
-    
+
     return outcome  # return the outcome of the game
+
 
 def menu():
     """
     This functions displays the menu and asks the user what they want to do
     """
     # prompt the user for their choice
-    option = ["1","2","3","q"]
-    terminate = False  # initialize terminate as fasle
+    option = ["1", "2", "3", "q"]
+    terminate = False  # initialize terminate as false
     while not terminate:
         try:
             choice = input("""Enter one of the following option:
@@ -231,12 +234,12 @@ def menu():
             1,2,3 or q?  """)
             # check if user has entered the valid option
             if choice not in option:
-                print("Invalid option")   
+                print("Invalid option")
             else:
-                terminate = not terminate 
+                terminate = not terminate
         except Exception as error:
             print(f"Error: {error}")
-     
+
     return choice
 
 
@@ -256,13 +259,14 @@ def load_scores():
                     leaders[name] = score
                 except ValueError:
                     print(f"Invalid score for {name}: {score_str}")
-    except (PermissionError, FileNotFoundError, EOFError,Exception) as error:
+    except (PermissionError, FileNotFoundError, EOFError, Exception) as error:
         print(f"Error: {error}")
     return leaders
 
+
 def save_score(score):
     """
-    if user chooce to save the score this function will prompt the user for name 
+    if user chose to save the score this function will prompt the user for name
     and save their score in the leaderboard.txt text file
     """
     # prompt user for their name
@@ -273,41 +277,41 @@ def save_score(score):
 
     # open the existing leaderboard
     try:
-        with open("leaderboard.txt","r") as file:
+        with open("leaderboard.txt", "r") as file:
             data = json.load(file)
-    except (PermissionError,EOFError,ValueError) as error:
+    except (PermissionError, EOFError, ValueError) as error:
         print(f"Error: {error}")
-    
+
     # if there is no file create a leaderboard list
     except FileNotFoundError:
         data = []
-    
+
     # add new score to a leaderboard
     data.append({
-        "name" : name,
-        "score" : score
+        "name": name,
+        "score": score
     })
-    
-    # save user name and score in file
-    with open("leaderboard.txt","w") as file:
-        json.dump(data,file)
-    
+
+    # save player name and score in file
+    with open("leaderboard.txt", "w") as file:
+        json.dump(data, file)
+
     print("Name and score saved!!")
 
 
 def display_leaderboard(leaders):
     """
-    This function will load the player name and their score and dispaly it
+    This function will load the player name and their score and display it
     """
     # print leaderboard
     print("-----------------------------")
     print("      Leader Board           ")
     print("-----------------------------")
-    # iterate through each items in dictionary and print them
+    # iterate through each item in dictionary and print them
     try:
         for key, value in leaders.items():
-            print("\t",key,value)
-    
+            print("\t", key, value)
+
     # catch and print the error in case of any
     except Exception as error:
         print(f"Error: {error}")
