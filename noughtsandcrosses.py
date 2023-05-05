@@ -33,15 +33,15 @@ def welcome(board):
     print("When prompted, enter the number corresponding to the square you want.")
 
 def initialise_board(board):
-    # develop code to set all elements of the board to one space ' '
-    # define a list with blank items
-    board = [ [' ',' ',' '],\
-              [' ',' ',' '],\
-              [' ',' ',' ']]
+    # update elements of the board list to ' '
+    for i in range(3):
+        for j in range(3):
+            board[i][j] = ' '
     
     # call the board function and pass the argument
     draw_board(board)
     return board
+
 
 def get_player_move(board):
     # develop code to ask the user for the cell to put the X in,
@@ -53,6 +53,12 @@ def get_player_move(board):
             # check if user has entered valid cell or not
             if not (user > 0 ) and (user < 10):
                 print("number should be between 1 to 9")
+            else:
+                # convert the user input into row and column to fill the user entered cell
+                row = (user - 1) // 3
+                col = (user - 1) % 3
+                # return row and col
+                return row, col
         
         # print error message in case of invalid input
         except ValueError:
@@ -62,11 +68,6 @@ def get_player_move(board):
         except Exception as error:
             print(f"Error:{error}")
         
-        # convert the user input into row and column to fill the user entered cell
-        row = (user - 1) // 3
-        col = (user - 1) % 3
-    # return row and col
-    return row, col
 
 def choose_computer_move(board):
     try:
@@ -114,28 +115,57 @@ def check_for_draw(board):
                 return False
     return True
     
-        
+def update_board(board, move, mark):
+    row, col = move
+    board[row][col] = mark
+ 
 def play_game(board):
-    # develop code to play the game
-    # start with a call to the initialise_board(board) function to set
-    # the board cells to all single spaces ' '
-    # then draw the board
-    # then in a loop, get the player move, update and draw the board
-    # check if the player has won by calling check_for_win(board, mark),
-    # if so, return 1 for the score
-    # if not check for a draw by calling check_for_draw(board)
-    # if drawn, return 0 for the score
-    # if not, then call choose_computer_move(board)
-    # to choose a move for the computer
-    # update and draw the board
-    # check if the computer has won by calling check_for_win(board, mark),
-    # if so, return -1 for the score
-    # if not check for a draw by calling check_for_draw(board)
-    # if drawn, return 0 for the score
-    #repeat the loop
-    return 0
-                    
-                
+    """
+    Play a game of tic-tac-toe.
+    """
+    initialise_board(board)
+    draw_board(board)
+    
+    terminate = False  # initialize terminate as false
+    outcome = None  # initialize outcome as None
+    while not terminate:
+        # Player's move
+        player_mark = 'X'
+        print("Player's turn (mark: {})".format(player_mark))
+        move = get_player_move(board)
+        update_board(board, move, player_mark)
+        draw_board(board)
+
+        # Check if player has won
+        win = check_for_win(board, player_mark)
+        if win:
+            print("Player wins!")
+            outcome = 1
+            terminate = True
+       
+        # Check for a draw
+        if check_for_draw(board):
+            print("Draw!")
+            outcome = 0
+            terminate = True
+
+        if not terminate:
+            # Computer's move
+            computer_mark = 'O'
+            print("Computer's turn (mark: {})".format(computer_mark))
+            move = choose_computer_move(board)
+            update_board(board, move, computer_mark)
+            draw_board(board)
+
+            # Check if computer has won
+            if check_for_win(board, computer_mark):
+                print("Computer wins!")
+                outcome = -1
+                terminate = True
+    
+    return outcome  # return the outcome of the game
+
+
 def menu():
     # prompt the user for their choice
     option = ["1","2","3","q"]
@@ -160,21 +190,21 @@ def menu():
 
 
 def load_scores():
-    # initialize an empty dictionary
     leaders = {}
-
-    # open file and read player name and score
     try:
-        with open("leaderboard.txt","r") as file:
+        with open("leaderboard.txt", "r") as file:
             data = json.load(file)
-            leaders = {name:int(score)for name, score in data.items()}
-    
-    # handle any exception that may occur
-    except (PermissionError,FileNotFoundError,EOFError,ValueError) as error:
+            for item in data:
+                name = item.get("name", "")
+                score_str = item.get("score", "")
+                try:
+                    score = int(score_str)
+                    leaders[name] = score
+                except ValueError:
+                    print(f"Invalid score for {name}: {score_str}")
+    except (PermissionError, FileNotFoundError, EOFError) as error:
         print(f"Error: {error}")
-    
     return leaders
-
 
 def save_score(score):
     # prompt user for their name
@@ -205,9 +235,6 @@ def save_score(score):
         json.dump(data,file)
     
     print("Name and score saved!!")
-
-score = 1
-save_score(score)
 
 
 def display_leaderboard(leaders):
