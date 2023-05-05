@@ -178,7 +178,10 @@ def load_scores():
 
 def save_score(score):
     # prompt user for their name
-    name = str(input("Enter your name: "))
+    name = input("Enter your name: ")
+
+    # initialize an empty list to save player name and score
+    data = []
 
     # open the existing leaderboard
     try:
@@ -196,13 +199,16 @@ def save_score(score):
         "name" : name,
         "score" : score
     })
-
+    
     # save user name and score in file
     with open("leaderboard.txt","w") as file:
-        json.dump("data",file)
+        json.dump(data,file)
     
     print("Name and score saved!!")
-    
+
+score = 1
+save_score(score)
+
 
 def display_leaderboard(leaders):
     # iterate through each items in dictionary and print them
