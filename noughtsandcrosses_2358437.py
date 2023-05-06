@@ -71,6 +71,7 @@ def get_player_move(board):
     while user is None:
         try:
             # prompt user where they want to put the X
+            print("\n.............................................................")
             user = int(input("Choose your square:\n 1 2 3 \n 4 5 6 \n 7 8 9 : "))
             # check if user has entered valid cell or not
             if not ((user > 0) and (user < 10)):
@@ -179,7 +180,9 @@ def play_game(board):
         while not terminate:
             # Player's move
             player_mark = 'X'
+            print("\n-------------------------------------")
             print(f"Player's turn (mark: {player_mark})")
+            print("-------------------------------------")
             row, col = get_player_move(board)
             board[row][col] = player_mark
             draw_board(board)
@@ -187,27 +190,35 @@ def play_game(board):
             # Check if player has won
             win = check_for_win(board, player_mark)
             if win:
+                print("\n---------------")
                 print("Player wins!")
+                print("---------------")
                 outcome = 1
                 terminate = True
 
             # Check for a draw
             if check_for_draw(board):
+                print("\n---------------")
                 print("Draw!")
+                print("---------------")
                 outcome = 0
                 terminate = True
 
             if not terminate:
                 # Computer's move
                 computer_mark = 'O'
+                print("\n---------------------------------------")
                 print(f"Computer's turn (mark: {computer_mark})")
+                print("---------------------------------------")
                 row, col = choose_computer_move(board)
                 board[row][col] = computer_mark
                 draw_board(board)
 
                 # Check if computer has won
                 if check_for_win(board, computer_mark):
+                    print("\n---------------")
                     print("Computer wins!")
+                    print("---------------")
                     outcome = -1
                     terminate = True
     # catch error in case of any
@@ -226,6 +237,7 @@ def menu():
     terminate = False  # initialize terminate as false
     while not terminate:
         try:
+            print("\n----------------------------------------------")
             choice = input("""Enter one of the following option:
             1- Play the game
             2- Save your score in the leaderboard
@@ -270,8 +282,10 @@ def save_score(score):
     and save their score in the leaderboard.txt text file
     """
     # prompt user for their name
+    print("|-----------------------|")
     name = input("Enter your name: ")
-
+    print("|-----------------------|")
+    
     # initialize an empty list to save player name and score
     data = []
 
@@ -295,8 +309,9 @@ def save_score(score):
     # save player name and score in file
     with open("leaderboard.txt", "w") as file:
         json.dump(data, file)
-
+    print("----------------------")
     print("Name and score saved!!")
+    print("----------------------")
 
 
 def display_leaderboard(leaders):
