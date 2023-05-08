@@ -157,12 +157,16 @@ def check_for_draw(board):
     """
     # develop cope to check if all cells are occupied
     try:
-        # check if any cell is empty or not
+        # check for a win condition first
+        if check_for_win(board, "X") or check_for_win(board, "O"):
+            return False
+
+    # check if any cell is empty or not
         for row in board:
-            for cell in row:
-                if cell == " ":
-                    return False
+            if " " in row:
+                return False
         return True
+
     # catch error in case of any 
     except Exception as error:
         print(f"Error:{error}")
