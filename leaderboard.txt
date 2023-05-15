@@ -1,1 +1,1 @@
-[{"name": "sumit ", "score": 3}, {"name": "shreyan", "score": 1}, {"name": "subin", "score": 4}, {"name": "rajib", "score": 1}, {"name": "test", "score": 1}, {"name": "new user", "score": 1}, {"name": "krishika", "score": 1}, {"name": "pawan", "score": 1}]
+[{"name": "sumit ", "score": 3}]

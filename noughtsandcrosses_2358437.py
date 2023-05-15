@@ -84,7 +84,9 @@ def get_player_move(board):
 
                 # check if cell is already filled or not
                 if board[row][col] != " ":
+                    print("|-------------------------|")
                     print("place is already filled!!!")
+                    print("|-------------------------|")
                     user = None
                 else:  # if user input is valid return row and column
                     return row, col
