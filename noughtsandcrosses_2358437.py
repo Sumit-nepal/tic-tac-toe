@@ -302,10 +302,6 @@ def save_score(score):
     except (PermissionError, EOFError, ValueError) as error:
         print(f"Error: {error}")
 
-    # if there is no file create a leaderboard list
-    except FileNotFoundError:
-        data = []
-
     # add new score to a leaderboard
     data.append({
         "name": name,
