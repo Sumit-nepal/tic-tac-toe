@@ -112,6 +112,8 @@ def choose_computer_move(board):
             # convert the number into row and colum to fill in "O"
             row = (computer - 1) // 3
             col = (computer - 1) % 3
+
+            # check if board is empty or not
             if board[row][col] != " ":
                 computer = None
             else:
