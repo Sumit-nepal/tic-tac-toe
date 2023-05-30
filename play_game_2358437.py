@@ -1,4 +1,4 @@
-from noughtsandcrosses_2358437 import *
+from player_vs_computer import *
 
 
 def main():
@@ -20,10 +20,12 @@ def main():
             leader_board = load_scores()
             display_leaderboard(leader_board)
         if choice == 'q':
+            print("----------------------------------------------------------------")
             print('Thank you for playing the "Unbeatable Noughts and Crosses" game.')
             print('Good bye')
-            return
+            print("----------------------------------------------------------------")
 
+            return
 
 # Program execution begins here
 if __name__ == '__main__':
